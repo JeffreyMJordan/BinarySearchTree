@@ -60,8 +60,19 @@ class BinarySearchTree
     node = find(value, @root)
     if node.left || node.right 
       if node.left && node.right 
-        max = maximum(node)
-
+        max = maximum(node.left)
+        
+        if max.left 
+          max.parent.right = max.left 
+          max.left = nil
+        end
+        node.left.parent = max 
+        node.right.parent = max
+        if (node.value <= node.parent.value)
+          node.parent.left = max
+        else 
+          node.parent.right = max
+        end 
       else 
         replacement_node = node.left ? node.left : node.right 
         parent = node.parent
@@ -75,10 +86,8 @@ class BinarySearchTree
       if node.parent 
         parent = node.parent 
         if (node.value <= parent.value)
-          puts "here"
           parent.left = nil
         else 
-          puts "here"
           parent.right = nil
         end
       else 
