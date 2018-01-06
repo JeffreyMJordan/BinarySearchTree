@@ -61,7 +61,6 @@ class BinarySearchTree
     if node.left || node.right 
       if node.left && node.right 
         max = maximum(node.left)
-        
         if max.left 
           max.parent.right = max.left 
           max.left = nil
@@ -94,7 +93,6 @@ class BinarySearchTree
         @root = nil 
         nil
       end 
-       
     end 
   end
 
@@ -108,6 +106,9 @@ class BinarySearchTree
   end
 
   def depth(tree_node = @root)
+    arr = []
+    depth_helper(tree_node, arr, 0)
+    arr.max
   end 
 
   def is_balanced?(tree_node = @root)
@@ -119,5 +120,19 @@ class BinarySearchTree
 
   private
   # optional helper methods go here:
+  def depth_helper(node, arr, depth)
+    if node.left.nil? && node.right.nil? 
+      arr << depth
+      return
+    else 
+      depth += 1 
+      if node.left
+        depth_helper(node.left, arr, depth) 
+      end 
+      if node.right
+        depth_helper(node.right, arr, depth)
+      end 
+    end 
+  end
 
 end
