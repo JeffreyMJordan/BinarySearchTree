@@ -59,7 +59,18 @@ class BinarySearchTree
   def delete(value)
     node = find(value, @root)
     if node.left || node.right 
-    
+      if node.left && node.right 
+        max = maximum(node)
+
+      else 
+        replacement_node = node.left ? node.left : node.right 
+        parent = node.parent
+        if replacement_node.value <= parent.value 
+          parent.left = replacement_node
+        else 
+          parent.right = replacement_node
+        end 
+      end 
     else 
       if node.parent 
         parent = node.parent 
@@ -80,6 +91,11 @@ class BinarySearchTree
 
   # helper method for #delete:
   def maximum(tree_node = @root)
+    curr = tree_node
+    until curr.right.nil? 
+      curr = curr.right
+    end
+    curr 
   end
 
   def depth(tree_node = @root)
