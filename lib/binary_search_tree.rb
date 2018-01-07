@@ -111,7 +111,17 @@ class BinarySearchTree
     arr.max
   end 
 
+  #Balanced if difference in depth of left and right subtrees is at most 1 
+  #Both left and right are balanced BSTs
   def is_balanced?(tree_node = @root)
+    # byebug
+    return true if tree_node.nil?
+    left_depth = tree_node.left ? depth(tree_node.left) : -1 
+    right_depth = tree_node.right ? depth(tree_node.right) : -1
+    if ((left_depth - right_depth).abs <=1) && is_balanced?(tree_node.left) && is_balanced?(tree_node.right)
+      return true 
+    end 
+    false
   end
 
   def in_order_traversal(tree_node = @root, arr = [])
